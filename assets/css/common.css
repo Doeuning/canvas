@@ -1,0 +1,37 @@
+@import url(./reset.css);
+
+#color {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 10;
+}
+
+.nav {
+  position: fixed;
+  top: 50px;
+  left: 50px;
+  border-radius: 10px;
+  background: #000;
+  padding: 20px 30px;
+}
+.nav li {
+  padding: 10px 0;
+}
+.nav a {
+  font-weight: 700;
+  font-size: 20px;
+  color: #fff;
+  text-decoration: none;
+}
+
+header {
+  opacity: 0;
+  transform: translateX(-50%);
+  transition: all 0.6s;
+}
+
+header.attached {
+  opacity: 1;
+  transform: translateX(0);
+}
