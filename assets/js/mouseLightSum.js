@@ -19,16 +19,7 @@ function init() {
   const staticLightPos = [{ x: width / 2, y: height / 2 }];
   let mousePos = { x: 0, y: 0 };
 
-  let size = 1;
-  let smaller = false;
   function move() {
-    if (smaller) {
-      size += 0.1;
-    } else {
-      if (size > 1) {
-        size -= 0.1;
-      }
-    }
     imageData = ctx.getImageData(0, 0, width, height);
     data = imageData.data;
 
@@ -41,7 +32,7 @@ function init() {
 
     for (let a = 0; a < width; a++) {
       for (let b = 0; b < height; b++) {
-        let closestDistanceToAnyLight = 10000;
+        let closestDistanceToAnyLight = 100000;
         for (let i = 0; i < allPos.length; i++) {
           currPos = allPos[i];
           const { x, y } = currPos;
@@ -53,15 +44,8 @@ function init() {
           }
         }
         const index = (b * width + a) * 4;
-
-        // 거리에 비례
-        const color = parseInt((255 * 25) / (closestDistanceToAnyLight * size));
-
-        // 거리의 제곱에 비례
-        // const size = 1000;
-        // const color =
-        //   (255 * size) /
-        //   (closestDistanceToAnyLight * closestDistanceToAnyLight);
+        const color = parseInt((25 / closestDistanceToAnyLight) * 255);
+        // const color = 255 - distance * 2;
         data[index + 0] = color;
         data[index + 1] = color;
         data[index + 2] = color;
@@ -74,12 +58,6 @@ function init() {
 
   canvas.addEventListener("mousemove", (e) => {
     mousePos = { x: e.clientX, y: e.clientY };
-  });
-  canvas.addEventListener("mousedown", (e) => {
-    smaller = true;
-  });
-  canvas.addEventListener("mouseup", (e) => {
-    smaller = false;
   });
 
   requestAnimationFrame(move);
