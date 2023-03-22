@@ -10,17 +10,14 @@ function init() {
   const width = (canvas.width = winW / 2);
   const height = (canvas.height = winH / 2);
   const ctx = canvas.getContext("2d");
-
-  // 상태
   let running = false;
   let paused = false;
   let dead = false;
-  let timer = 0;
-
-  // 객체
   let runAnimation = null;
   let dansoMan = null;
   let workers = [];
+  let timer = 0;
+  // setting
 
   function clearBg() {
     ctx.fillStyle = "#f2f2f2";
@@ -73,58 +70,8 @@ function init() {
     }
   }
 
-  function start() {
-    init();
-    document.querySelector(".float-area").classList.remove("show");
-    dansoMan = new DansoMan();
-    dansoMan.draw();
-    run();
-  }
-
-  function run() {
-    running = true;
-    timer++;
-    document.getElementById("score").innerHTML = timer;
-    document.getElementById("resultScore").innerHTML = timer;
-    dansoMan.draw();
-
-    if (timer % 120 === 0) {
-      const worker = new Worker();
-      workers.push(worker);
-    }
-
-    runAnimation = requestAnimationFrame(run);
-
-    const dansoPosX = dansoMan.x + dansoMan.w;
-    const dansoPosY = dansoMan.y + dansoMan.h;
-    workers.forEach((worker) => {
-      worker.draw();
-      if (dansoPosX >= worker.x && dansoPosY >= worker.y) {
-        finish();
-      }
-    });
-    showState(dansoMan.jump);
-    console.log(dansoMan);
-  }
-
-  function pause() {
-    running = false;
-    paused = true;
-    cancelAnimationFrame(runAnimation);
-    showState();
-  }
-
-  function finish() {
-    running = false;
-    dead = true;
-    cancelAnimationFrame(runAnimation);
-    showState();
-
-    document.querySelector(".float-area").classList.add("show");
-  }
-
   window.addEventListener("load", (e) => {
-    document.querySelector(".float-area").classList.add("show");
+    document.getElementById("btnStart").classList.add("show");
   });
 
   window.addEventListener("keydown", (e) => {
@@ -136,30 +83,94 @@ function init() {
 
   window.addEventListener("click", (e) => {
     if (e.target.getAttribute("id") === "btnStart") {
-      start();
+      e.target.remove();
+      dansoMan = new DansoMan();
+      dansoMan.draw();
+      running = true;
+    }
+    if (e.target.getAttribute("id") === "btnToggle") {
+      const btnState = e.target.getAttribute("data-state");
+      if (btnState === "running") {
+        running = false;
+        e.target.setAttribute("data-state", "paused");
+      } else if (btnState === "paused") {
+        running = true;
+        e.target.setAttribute("data-state", "running");
+      } else {
+        running = true;
+        e.target.setAttribute("data-state", "finished");
+      }
+      // if (running) {
+      //   running = false;
+      // } else {
+      //   if (dead) {
+      //     init();
+      //   } else {
+      //     running = true;
+      //   }
+      //   document.getElementById("btnToggle").innerHTML = "STOP!";
+      // }
     }
     changeState();
   });
-  function changeState() {
-    console.log("change");
-    if (running && !paused && !dead) {
-      run();
+  // function changeState() {
+  //   console.log("change");
+  //   if (running) {
+  //     run();
+  //     document.getElementById("btnToggle").classList.remove("stopped");
+  //     document.getElementById("btnToggle").innerHTML = "PAUSE!";
+  //   } else {
+  //     pause();
+  //     document.getElementById("btnToggle").classList.add("stopped");
+  //     document.getElementById("btnToggle").innerHTML = "KEEP GOING!";
+  //   }
+  // }
+  function run() {
+    timer++;
+    document.getElementById("score").innerHTML = timer;
+    dansoMan.draw();
+    if (timer % 120 === 0) {
+      const worker = new Worker();
+      workers.push(worker);
     }
-    if (paused) {
-      if (dead) {
+    runAnimation = requestAnimationFrame(run);
+
+    const dansoPosX = dansoMan.x + dansoMan.w;
+    const dansoPosY = dansoMan.y + dansoMan.h;
+    workers.forEach((worker) => {
+      worker.draw();
+      if (dansoPosX >= worker.x && dansoPosY >= worker.y) {
         finish();
-      } else {
-        pause();
+        changeState();
       }
-    }
+    });
+    showState();
+  }
+
+  function pause() {
+    running = false;
+    paused = true;
+    // const btnTxt = "KEEP GOING!";
+    // console.log(dead ? "----------------end--------------------" : "stop");
+    // document.getElementById("btnToggle").setAttribute("data-state", "paused");
+    cancelAnimationFrame(runAnimation);
+    showState();
+  }
+
+  function finish() {
+    running = false;
+    dead = true;
+    // const btnTxt = "TRY AGAIN!";
+    // document.getElementById("btnToggle").setAttribute("data-state", "finished");
+    cancelAnimationFrame(runAnimation);
+    showState();
   }
 
   clearBg();
-  function showState(jump) {
+  function showState() {
     document.getElementById("running-show").innerHTML = running;
     document.getElementById("dead-show").innerHTML = dead;
     document.getElementById("paused-show").innerHTML = paused;
-    document.getElementById("jump-show").innerHTML = jump;
   }
 }
 
