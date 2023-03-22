@@ -1,138 +1,377 @@
-/* http://meyerweb.com/eric/tools/css/reset/
-   v2.0 | 20110126
-   License: none (public domain)
-*/
+@charset "utf-8";
+::-moz-selection {
+  background: #000000;
+  color: #ffffff;
+}
 
-html,
+::selection {
+  background: #000000;
+  color: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: inherit;
+  font-style: normal;
+  font-weight: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  letter-spacing: -0.045em;
+  text-decoration: inherit;
+  color: inherit;
+  vertical-align: top;
+  outline: none;
+}
+
+a,
+address,
+area,
+article,
+aside,
+audio,
+b,
 body,
+br,
+button,
+canvas,
+caption,
+cite,
+code,
+col,
+colgroup,
+dd,
+del,
 div,
-span,
-applet,
-object,
-iframe,
+dl,
+dt,
+em,
+embed,
+fieldset,
+figcaption,
+figure,
+footer,
+form,
+frame,
+frameset,
 h1,
 h2,
 h3,
 h4,
 h5,
 h6,
-p,
-blockquote,
-pre,
-a,
-abbr,
-acronym,
-address,
-big,
-cite,
-code,
-del,
-dfn,
-em,
+head,
+header,
+hr,
+html,
+i,
+iframe,
 img,
 ins,
-kbd,
-q,
-s,
-samp,
-small,
-strike,
-strong,
-sub,
-sup,
-tt,
-var,
-b,
-u,
-i,
-center,
-dl,
-dt,
-dd,
-ol,
-ul,
-li,
-fieldset,
-form,
+input,
 label,
 legend,
-table,
-caption,
-tbody,
-tfoot,
-thead,
-tr,
-th,
-td,
-article,
-aside,
-canvas,
-details,
-embed,
-figure,
-figcaption,
-footer,
-header,
-hgroup,
-menu,
+li,
+link,
+map,
+meta,
 nav,
-output,
+object,
+ol,
+p,
+pre,
+q,
+rp,
+rt,
 ruby,
+s,
+script,
 section,
+select,
+source,
+span,
+strong,
+style,
+sub,
 summary,
+sup,
+table,
+tbody,
+td,
+textarea,
+tfoot,
+th,
+thead,
 time,
-mark,
-audio,
+title,
+tr,
+u,
+ul,
 video {
   margin: 0;
   padding: 0;
-  border: 0;
-  font-size: 100%;
   font-family: inherit;
-  vertical-align: baseline;
-  -webkit-text-size-adjust: 100%;
+  font-style: normal;
+  font-weight: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  text-decoration: inherit;
+  color: inherit;
+  vertical-align: top;
+  outline: none;
 }
-/* HTML5 display-role reset for older browsers */
-article,
-aside,
-details,
-figcaption,
-figure,
-footer,
-header,
-hgroup,
-menu,
-nav,
-section {
-  display: block;
+
+br {
+  font-family: NotoSansCJKkr, sans-serif, Lucida Sans Unicode, arial !important;
 }
+
+html {
+  width: 100%;
+  height: 100%;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  -webkit-overflow-scrolling: touch;
+}
+
 body {
+  width: 100%;
+  height: 100%;
+  font-family: GC;
+  font-weight: 400;
+  font-size: 14px;
   line-height: 1;
+  color: #000;
+  -webkit-font-smoothing: antialiased;
+  /* font-smoothing: antialiased; */
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-text-size-adjust: 100%;
+  -webkit-print-color-adjust: exact;
 }
+
+ul,
 ol,
-ul {
+li {
   list-style: none;
 }
-blockquote,
-q {
-  quotes: none;
+
+img,
+hr {
+  border: none;
 }
-blockquote:before,
-blockquote:after,
-q:before,
-q:after {
-  content: "";
+
+p {
+  max-height: 999999px;
 }
+
 table {
-  border-collapse: collapse;
+  width: 100%;
   border-spacing: 0;
+  table-layout: fixed;
 }
-strong,
-b {
-  font-weight: 500;
+
+th,
+td {
+  vertical-align: middle;
 }
-input,
-select,
+
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"] {
+  display: inline-block;
+  width: 100%;
+  height: 40px;
+  padding: 10px 20px;
+  border: 1px solid #cccccc;
+  font-size: 16px;
+  line-height: 18px;
+  color: #999999;
+  box-sizing: border-box;
+  background: #ffffff;
+  /*-webkit-box-shadow: 0 0 0 1000px white inset;*/
+  border-radius: none;
+  -webkit-border-radius: 0;
+  -webkit-appearance: none;
+}
+
+select {
+  display: inline-block;
+  width: 100%;
+  height: 40px;
+  padding: 10px 30px 10px 10px;
+  border: 1px solid #cccccc;
+  font-size: 14px;
+  line-height: 18px;
+  color: #666666;
+  box-sizing: border-box;
+  background: #ffffff url(/resources/images/brand/common/slt.png) right 12px
+    center no-repeat;
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: none;
+  -webkit-border-radius: 0;
+}
+
 textarea {
-  font-family: inherit;
+  display: inline-block;
+  width: 100%;
+  height: 40px;
+  padding: 14px 20px;
+  border: none;
+  font-size: 16px;
+  line-height: 27px;
+  color: #999999;
+  box-sizing: border-box;
+  background: #f7f7f7;
+}
+
+select::-ms-expand {
+  display: none;
+}
+
+::-webkit-input-placeholder {
+  color: #999999;
+}
+
+::-moz-placeholder {
+  color: #999999;
+}
+
+:-ms-input-placeholder {
+  color: #999999;
+}
+
+:-moz-placeholder {
+  color: #999999;
+}
+
+button,
+input[type="file"],
+input[type="image"],
+input[type="reset"],
+input[type="button"],
+input[type="submit"] {
+  border: none;
+  background: none;
+  border-radius: 0;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+label {
+  cursor: pointer;
+}
+
+legend,
+hr,
+caption {
+  visibility: hidden;
+  overflow: hidden;
+  width: 0px;
+  height: 0px;
+  font-size: 0px;
+  line-height: 0px;
+  border: none;
+  background: none;
+  position: absolute;
+  left: -9999em;
+  top: -9999em;
+  opacity: 0;
+}
+
+fieldset,
+iframe {
+  border: none;
+}
+
+sup,
+sub {
+  line-height: 1;
+}
+
+a:link {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:visited {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:active {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:focus {
+  text-decoration: none;
+  color: inherit;
+}
+
+.hidden {
+  visibility: hidden;
+  overflow: hidden;
+  position: absolute;
+  left: -9999em;
+  top: -9999em;
+  width: 0px;
+  height: 0px;
+  border: none;
+  background: none;
+  font-size: 0px;
+  line-height: 0px;
+  opacity: 0;
+}
+
+@media screen and (max-width: 750px) {
+  input[type="text"],
+  input[type="number"],
+  input[type="email"],
+  input[type="password"] {
+    display: inline-block;
+    width: 100%;
+    height: 80px;
+    padding: 10px 10px 10px 32px;
+    border: 2px solid #cccccc;
+    font-size: 28px;
+    line-height: 42px;
+    color: #666666;
+    box-sizing: border-box;
+    background: #ffffff;
+    /*-webkit-box-shadow: 0 0 0 1000px white inset;*/
+    border-radius: none;
+    -webkit-border-radius: 0;
+    -webkit-appearance: none;
+  }
+
+  select {
+    display: inline-block;
+    width: 100%;
+    height: 80px;
+    padding: 10px 30px 10px 10px;
+    border: 2px solid #cccccc;
+    font-size: 28px;
+    line-height: 42px;
+    color: #666666;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: none;
+    -webkit-border-radius: 0;
+  }
+
+  textarea {
+    padding: 23px 20px;
+    font-size: 26px;
+    line-height: 38px;
+    background: #f7f7f7;
+  }
 }

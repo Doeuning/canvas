@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../assets/css/common.css" />
+    <script src="../assets/js/index.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <header></header>
+      <div id="wrap" class="canvas-wrap">
+        <div class="state">
+          <div class="tit">7호선 RUN!</div>
+          <div class="score">
+            <div class="tit">SCORE</div>
+            <div id="score" class="num">0</div>
+          </div>
+          <button type="button" id="btnStop" class="btn-stop">STOP!</button>
+        </div>
+        <canvas id="canvas"></canvas>
+        <button type="button" id="btnStart" class="btn-start">
+          GAME START!
+        </button>
+      </div>
+    </div>
+    <style>
+      .canvas-wrap {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        overflow: hidden;
+        border-radius: 5px;
+        box-shadow: 10px 10px 0px 0px rgba(0, 0, 0, 0.2);
+      }
+      .state {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px;
+        background: #666;
+        font-size: 20px;
+        color: #fff;
+      }
+      .state .score {
+        display: flex;
+      }
+      .state .score .tit {
+        margin-right: 20px;
+      }
+      .btn-start {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 20px 30px;
+        background: #666;
+        font-size: 30px;
+        color: #fff;
+      }
+      .btn-stop {
+        margin: -10px;
+        padding: 10px;
+      }
+      .btn-stop.stopped {
+        background: #ff0000;
+      }
+    </style>
+    <script src="../assets/js/dansoRun.js"></script>
+  </body>
+</html>
