@@ -11,6 +11,7 @@ function init() {
   const height = (canvas.height = winH / 2);
   const ctx = canvas.getContext("2d");
   let running = false;
+  let dead = false;
   let runAnimation = null;
   let dansoMan = null;
   let workers = [];
@@ -50,10 +51,6 @@ function init() {
       ctx.fillStyle = "#000";
       ctx.fillRect(this.x, this.y, this.w, this.h);
     }
-    // jump() {
-    //   ctx.fillStyle = "#ff0000";
-    //   ctx.fillRect(this.x, this.y, this.w, this.h);
-    // }
   }
 
   class Worker {
@@ -82,21 +79,32 @@ function init() {
   window.addEventListener("click", (e) => {
     if (e.target.getAttribute("id") === "btnStart") {
       e.target.remove();
-      running = true;
       dansoMan = new DansoMan();
       dansoMan.draw();
-      run();
+      running = true;
     }
     if (e.target.getAttribute("id") === "btnStop") {
       if (running) {
         running = false;
-        stop();
       } else {
-        running = true;
-        run();
+        if (dead) {
+          init();
+        } else {
+          running = true;
+        }
+        document.getElementById("btnStop").innerHTML = "STOP!";
       }
     }
+    changeState();
   });
+  function changeState() {
+    console.log("change");
+    if (running) {
+      run();
+    } else {
+      stop();
+    }
+  }
   function run() {
     timer++;
     document.getElementById("score").innerHTML = timer;
@@ -105,17 +113,26 @@ function init() {
       const worker = new Worker();
       workers.push(worker);
     }
+    runAnimation = requestAnimationFrame(run);
 
+    const dansoPosX = dansoMan.x + dansoMan.w;
+    const dansoPosY = dansoMan.y + dansoMan.h;
     workers.forEach((worker) => {
       worker.draw();
+      if (dansoPosX >= worker.x && dansoPosY >= worker.y) {
+        running = false;
+        dead = true;
+        changeState();
+      }
     });
-    runAnimation = requestAnimationFrame(run);
   }
 
   function stop() {
-    cancelAnimationFrame(runAnimation);
+    const btnTxt = dead ? "TRY AGAIN!" : "KEEP GOING!";
+    console.log(dead ? "----------------end--------------------" : "stop");
     document.getElementById("btnStop").classList.add("stopped");
-    document.getElementById("btnStop").innerHTML = "KEEP GOING!";
+    document.getElementById("btnStop").innerHTML = btnTxt;
+    cancelAnimationFrame(runAnimation);
   }
 
   clearBg();
