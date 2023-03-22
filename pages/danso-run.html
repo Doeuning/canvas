@@ -18,7 +18,14 @@
             <div class="tit">SCORE</div>
             <div id="score" class="num">0</div>
           </div>
-          <button type="button" id="btnStop" class="btn-stop">STOP!</button>
+          <button
+            type="button"
+            id="btnToggle"
+            class="btn-toggle"
+            data-state="running"
+          >
+            PAUSE!
+          </button>
         </div>
         <canvas id="canvas"></canvas>
         <button type="button" id="btnStart" class="btn-start">
@@ -51,6 +58,7 @@
         margin-right: 20px;
       }
       .btn-start {
+        display: none;
         position: absolute;
         top: 50%;
         left: 50%;
@@ -60,11 +68,14 @@
         font-size: 30px;
         color: #fff;
       }
-      .btn-stop {
+      .btn-start.show {
+        display: block;
+      }
+      .btn-toggle {
         margin: -10px;
         padding: 10px;
       }
-      .btn-stop.stopped {
+      .btn-toggle {
         background: #ff0000;
       }
     </style>

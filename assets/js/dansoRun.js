@@ -69,6 +69,10 @@ function init() {
     }
   }
 
+  window.addEventListener("load", (e) => {
+    document.getElementById("btnStart").classList.add("show");
+  });
+
   window.addEventListener("keydown", (e) => {
     if (e.key == " " || e.code == "Space" || e.keyCode == 32) {
       dansoMan.jump = true;
@@ -83,17 +87,28 @@ function init() {
       dansoMan.draw();
       running = true;
     }
-    if (e.target.getAttribute("id") === "btnStop") {
-      if (running) {
+    if (e.target.getAttribute("id") === "btnToggle") {
+      const btnState = e.target.getAttribute("data-state");
+      if (btnState === "running") {
         running = false;
+        e.target.setAttribute("data-state", "paused");
+      } else if (btnState === "paused") {
+        running = true;
+        e.target.setAttribute("data-state", "running");
       } else {
-        if (dead) {
-          init();
-        } else {
-          running = true;
-        }
-        document.getElementById("btnStop").innerHTML = "STOP!";
+        running = true;
+        e.target.setAttribute("data-state", "finished");
       }
+      // if (running) {
+      //   running = false;
+      // } else {
+      //   if (dead) {
+      //     init();
+      //   } else {
+      //     running = true;
+      //   }
+      //   document.getElementById("btnToggle").innerHTML = "STOP!";
+      // }
     }
     changeState();
   });
@@ -101,8 +116,12 @@ function init() {
     console.log("change");
     if (running) {
       run();
+      document.getElementById("btnToggle").classList.remove("stopped");
+      document.getElementById("btnToggle").innerHTML = "PAUSE!";
     } else {
       stop();
+      document.getElementById("btnToggle").classList.add("stopped");
+      document.getElementById("btnToggle").innerHTML = "KEEP GOING!";
     }
   }
   function run() {
@@ -120,18 +139,24 @@ function init() {
     workers.forEach((worker) => {
       worker.draw();
       if (dansoPosX >= worker.x && dansoPosY >= worker.y) {
-        running = false;
-        dead = true;
+        endGame();
         changeState();
       }
     });
   }
 
   function stop() {
-    const btnTxt = dead ? "TRY AGAIN!" : "KEEP GOING!";
+    const btnTxt = "KEEP GOING!";
     console.log(dead ? "----------------end--------------------" : "stop");
-    document.getElementById("btnStop").classList.add("stopped");
-    document.getElementById("btnStop").innerHTML = btnTxt;
+    document.getElementById("btnToggle").setAttribute("data-state", "paused");
+    cancelAnimationFrame(runAnimation);
+  }
+
+  function endGame() {
+    running = false;
+    dead = true;
+    const btnTxt = "TRY AGAIN!";
+    document.getElementById("btnToggle").setAttribute("data-state", "finished");
     cancelAnimationFrame(runAnimation);
   }
 
