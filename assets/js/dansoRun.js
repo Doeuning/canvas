@@ -38,9 +38,9 @@ function init() {
 
   class DansoMan {
     constructor() {
-      this.defaultY = (height / 3) * 2 - dansoHeight;
+      this.defaultY = (height / 4) * 3 - dansoHeight;
       this.x = margin;
-      this.y = (height / 3) * 2 - dansoHeight;
+      this.y = (height / 4) * 3 - dansoHeight;
       this.w = dansoWidth;
       this.h = dansoHeight;
       this.jump = false;
@@ -68,9 +68,9 @@ function init() {
 
   class Worker {
     constructor() {
-      this.defaultY = (height / 3) * 2 - 100;
+      this.defaultY = (height / 4) * 3 - 100;
       this.x = width - margin - workerWidth;
-      this.y = (height / 3) * 2 - 100;
+      this.y = (height / 4) * 3 - workerHeight;
       this.w = workerWidth;
       this.h = workerHeight;
       this.speed = 5;
@@ -161,7 +161,6 @@ function init() {
   });
 
   window.addEventListener("click", (e) => {
-    console.log(e.target);
     if (e.target.getAttribute("id") === "btnStart") {
       start();
     }
