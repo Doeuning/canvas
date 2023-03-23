@@ -11,9 +11,12 @@ function init() {
   const height = (canvas.height = winH / 2);
   const ctx = canvas.getContext("2d");
 
+  const manImg = new Image();
+  manImg.src = "../assets/images/dansoMan.gif";
+
   //
   const margin = 20;
-  const dansoWidth = 50;
+  const dansoWidth = 60;
   const dansoHeight = 100;
   const workerWidth = 50;
   const workerHeight = 100;
@@ -61,8 +64,7 @@ function init() {
         }
       }
       clearBg();
-      ctx.fillStyle = "#000";
-      ctx.fillRect(this.x, this.y, this.w, this.h);
+      ctx.drawImage(manImg, this.x, this.y);
     }
   }
 
