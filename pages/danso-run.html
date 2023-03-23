@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="../assets/css/common.css" />
+    <link rel="stylesheet" href="../assets/css/danso.css" />
     <script src="../assets/js/index.js"></script>
   </head>
   <body>
@@ -30,7 +31,7 @@
         <canvas id="canvas"></canvas>
         <div class="float-area">
           <div id="result" class="result">
-            <div class="score">
+            <div class="result-score">
               <div id="resultScore" class="num">0</div>
               점
             </div>
@@ -45,101 +46,10 @@
         <li>paused: <span id="paused-show"></span></li>
         <li>dead: <span id="dead-show"></span></li>
         <li>jump: <span id="jump-show"></span></li>
+        <li>가로: <span id="x-show"></span></li>
+        <li>세로: <span id="y-show"></span></li>
       </ul>
     </div>
-    <style>
-      .canvas-wrap {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        overflow: hidden;
-        border-radius: 5px;
-        box-shadow: 10px 10px 0px 0px rgba(0, 0, 0, 0.2);
-      }
-      .state {
-        display: flex;
-        justify-content: space-between;
-        padding: 20px;
-        background: #666;
-        font-size: 20px;
-        color: #fff;
-      }
-      .state .score {
-        display: flex;
-      }
-      .state .score .tit {
-        margin-right: 20px;
-      }
-      .float-area {
-        display: none;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        content: "";
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-      }
-      .float-area.show {
-        display: flex;
-      }
-      .btn-start {
-        display: block;
-        position: relative;
-        z-index: 100;
-        padding: 20px 30px;
-        background: #666;
-        font-size: 30px;
-        color: #fff;
-      }
-      .btn-toggle {
-        margin: -10px;
-        padding: 10px;
-      }
-      .btn-toggle {
-        background: #ff0000;
-      }
-      .result .score {
-        display: flex;
-        align-items: center;
-        position: relative;
-        z-index: 100;
-        margin-bottom: 20px;
-        font-size: 30px;
-        color: #fff;
-      }
-      .result .score .num {
-        margin-right: 10px;
-        font-size: 50px;
-      }
-
-      .result::after {
-        display: block;
-        content: "";
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        z-index: 50;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.3);
-      }
-
-      #test {
-        position: fixed;
-        bottom: 50px;
-        left: 50px;
-        font-size: 50px;
-        font-weight: 700;
-      }
-    </style>
     <script src="../assets/js/dansoRun.js"></script>
   </body>
 </html>
