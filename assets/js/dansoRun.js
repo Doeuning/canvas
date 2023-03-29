@@ -28,11 +28,27 @@ function init() {
   let played = false;
   let timer = 0;
   let diffX, diffY;
+  let keydown = false;
 
   // 객체
   let runAnimation = null;
   let dansoMan = null;
   let workers = [];
+
+  function setState() {
+    running = false;
+    paused = false;
+    dead = false;
+    played = false;
+    timer = 0;
+    diffX = null;
+    diffY = null;
+    keydown = false;
+
+    runAnimation = null;
+    dansoMan = null;
+    workers = [];
+  }
 
   function clearBg() {
     ctx.fillStyle = "#f2f2f2";
@@ -86,7 +102,8 @@ function init() {
   }
 
   function start() {
-    init();
+    console.log("---------------------------start");
+    setState();
     document.querySelector(".float-area").classList.remove("show");
     dansoMan = new DansoMan();
     dansoMan.draw();
@@ -94,10 +111,12 @@ function init() {
   }
 
   function run() {
+    console.log("run");
     running = true;
 
     timer++;
     document.getElementById("score").innerHTML = timer;
+    document.getElementById("btnToggle").innerHTML = "PAUSE!";
     dansoMan.draw();
 
     if (timer % 120 === 0) {
@@ -127,17 +146,21 @@ function init() {
   }
 
   function pause() {
+    console.log("pause");
     running = false;
     paused = true;
+    document.getElementById("btnToggle").innerHTML = "KEEP GOING!";
     cancelAnimationFrame(runAnimation);
 
     showState();
   }
 
   function finish() {
+    console.log("finish------------");
     running = false;
     played = true;
     dead = true;
+    keydown = false;
     cancelAnimationFrame(runAnimation);
     changeState();
 
@@ -155,10 +178,14 @@ function init() {
   });
 
   window.addEventListener("keydown", (e) => {
-    console.log(e.key, dansoMan);
-    if (e.key == " " || e.code == "Space" || e.keyCode == 32) {
-      dansoMan.jump = true;
-      dansoMan.up = true;
+    console.log(e.code, e, dansoMan, "키다운");
+    e.preventDefault();
+    if (e.repeat === false) {
+      if (e.key == " " || e.code == "Space" || e.keyCode == 32) {
+        dansoMan.jump = true;
+        dansoMan.up = true;
+        keydown = true;
+      }
     }
   });
 
@@ -186,6 +213,7 @@ function init() {
     }
   }
 
+  setState();
   clearBg();
   function showState(jump) {
     document.getElementById("running-show").innerHTML = running;
