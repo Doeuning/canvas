@@ -12,7 +12,7 @@ function init() {
   const ctx = canvas.getContext("2d");
 
   const manImg = new Image();
-  manImg.src = "../assets/images/dansoMan.gif";
+  manImg.src = "../assets/images/dansoMan-0.png";
 
   //
   const margin = 20;
@@ -20,6 +20,12 @@ function init() {
   const dansoHeight = 100;
   const workerWidth = 50;
   const workerHeight = 100;
+  const imgSrc = [
+    "../assets/images/dansoMan-0.png",
+    "../assets/images/dansoMan-1.png",
+    "../assets/images/dansoMan-2.png",
+    "../assets/images/dansoMan-3.png",
+  ];
 
   // 상태
   let running = false;
@@ -64,8 +70,10 @@ function init() {
       this.h = dansoHeight;
       this.jump = false;
       this.up = false;
+      this.currentImageIndex = 0;
+      this.lastImageUpdateTime = 0;
     }
-    draw() {
+    draw(timer) {
       if (this.jump) {
         if (this.up) {
           this.y -= 5;
@@ -78,6 +86,13 @@ function init() {
             this.jump = false;
           }
         }
+        manImg.src = imgSrc[1];
+      } else {
+        if (Date.now() - this.lastImageUpdateTime > 200) {
+          this.currentImageIndex = (this.currentImageIndex + 1) % imgSrc.length;
+          this.lastImageUpdateTime = Date.now();
+        }
+        manImg.src = imgSrc[this.currentImageIndex];
       }
       clearBg();
       ctx.drawImage(manImg, this.x, this.y);
@@ -117,7 +132,7 @@ function init() {
     timer++;
     document.getElementById("score").innerHTML = timer;
     document.getElementById("btnToggle").innerHTML = "PAUSE!";
-    dansoMan.draw();
+    dansoMan.draw(timer);
 
     if (timer % 120 === 0) {
       const speed = Math.floor(Math.random() * 6 + 2);
