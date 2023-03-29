@@ -4,6 +4,19 @@ if (canvas.getContext) {
   init();
 }
 
+// // 역무원
+// 어이 어이 얌마!
+// 조용히해!
+// 자리에 앉어!
+
+// // 단소
+// 너 누구야
+// 너 누구야
+// 후.아.유
+// 컴온 컴온 컴온
+// 나 여깄어
+// 하! 하! 하!
+
 function init() {
   const winW = window.innerWidth;
   const winH = window.innerHeight;
@@ -11,7 +24,6 @@ function init() {
   const height = (canvas.height = winH / 2);
   const ctx = canvas.getContext("2d");
 
-  //
   const margin = 20;
   const dansoWidth = 60;
   const dansoHeight = 100;
@@ -27,12 +39,19 @@ function init() {
     default: "../assets/images/txt-1.png",
     jump: "../assets/images/txt-2.png",
   };
+  const workerSrc = [
+    "../assets/images/worker-0.png",
+    "../assets/images/worker-1.png",
+  ];
 
   const dansomanImg = new Image();
   dansomanImg.src = dansomanSrc[0];
 
   const msgImg = new Image();
   msgImg.src = msgSrc.default;
+
+  const workerImg = new Image();
+  workerImg.src = workerSrc[0];
 
   // 상태
   let running = false;
@@ -129,11 +148,17 @@ function init() {
       this.w = workerWidth;
       this.h = workerHeight;
       this.speed = 5;
+      this.currentImageIndex = 0;
+      this.lastImageUpdateTime = 0;
     }
     draw() {
-      // console.log("역무원이 나타났다!");
-      ctx.fillStyle = "#ff0000";
-      ctx.fillRect(this.x, this.y, this.w, this.h);
+      if (Date.now() - this.lastImageUpdateTime > 200) {
+        this.currentImageIndex =
+          (this.currentImageIndex + 1) % workerSrc.length;
+        this.lastImageUpdateTime = Date.now();
+      }
+      workerImg.src = workerSrc[this.currentImageIndex];
+      ctx.drawImage(workerImg, this.x, this.y);
       this.x -= this.speed;
     }
   }
