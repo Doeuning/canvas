@@ -197,6 +197,7 @@ function init() {
   }
 
   function crash(man, worker) {
+    const margin = 10;
     diffX = worker.x - (man.x + man.w);
     diffY = worker.y - (man.y + man.h);
     const maxX = worker.w + man.w;
