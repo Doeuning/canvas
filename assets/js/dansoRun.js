@@ -42,6 +42,8 @@ function init() {
   const workerSrc = [
     "../assets/images/worker-0.png",
     "../assets/images/worker-1.png",
+    "../assets/images/worker-2.png",
+    "../assets/images/worker-3.png",
   ];
 
   const dansomanImg = new Image();
@@ -85,6 +87,10 @@ function init() {
   function clearBg() {
     ctx.fillStyle = "#f2f2f2";
     ctx.fillRect(0, 0, width, height);
+    ctx.beginPath();
+    ctx.moveTo(0, (height / 4) * 3);
+    ctx.lineTo(width, (height / 4) * 3);
+    ctx.stroke();
   }
 
   class DansoMan {
@@ -110,7 +116,7 @@ function init() {
     }
     clearMessage() {
       ctx.fillStyle = "#f2f2f2";
-      ctx.fillRect(this.x + 70, this.y - 30, 100, 400);
+      ctx.fillRect(this.x + 70, this.y - 30, 100, 40);
     }
     draw() {
       if (this.jump) {
@@ -134,7 +140,7 @@ function init() {
         }
         dansomanImg.src = dansomanSrc[this.currentImageIndex];
       }
-      clearBg();
+      // clearBg();
       this.message();
       ctx.drawImage(dansomanImg, this.x, this.y);
     }
@@ -158,8 +164,8 @@ function init() {
         this.lastImageUpdateTime = Date.now();
       }
       workerImg.src = workerSrc[this.currentImageIndex];
-      ctx.drawImage(workerImg, this.x, this.y);
       this.x -= this.speed;
+      ctx.drawImage(workerImg, this.x, this.y);
     }
   }
 
@@ -173,6 +179,7 @@ function init() {
   }
 
   function run() {
+    clearBg();
     console.log("run");
     running = true;
 
@@ -198,9 +205,18 @@ function init() {
 
   function crash(man, worker) {
     const margin = 10;
-    diffX = worker.x - (man.x + man.w);
-    diffY = worker.y - (man.y + man.h);
-    const maxX = worker.w + man.w;
+    const workerX = worker.x + margin;
+    const workerY = worker.y + margin;
+    const workerW = worker.w - margin * 2;
+    const workerH = worker.h - margin * 2;
+    const manX = man.x + margin;
+    const manY = man.y + margin;
+    const manW = man.w - margin * 2;
+    const manH = man.h - margin * 2;
+
+    diffX = workerX - (manX + manW);
+    diffY = workerY - (manY + manH);
+    const maxX = workerW + manW;
     if (diffX < 0 && diffX > -maxX && diffY < 0) {
       finish();
     }
