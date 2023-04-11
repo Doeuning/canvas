@@ -55,6 +55,9 @@ function init() {
   const workerImg = new Image();
   workerImg.src = workerSrc[0];
 
+  const sojuImg = new Image();
+  sojuImg.src = "../assets/images/soju.png";
+
   // 상태
   let running = false;
   let paused = false;
@@ -82,6 +85,7 @@ function init() {
     runAnimation = null;
     dansoMan = null;
     workers = [];
+    soju = null;
   }
 
   function clearBg() {
@@ -149,7 +153,8 @@ function init() {
   class Worker {
     constructor() {
       this.defaultY = (height / 4) * 3 - 100;
-      this.x = width - margin - workerWidth;
+      // this.x = width - margin - workerWidth;
+      this.x = width;
       this.y = (height / 4) * 3 - workerHeight;
       this.w = workerWidth;
       this.h = workerHeight;
@@ -169,12 +174,33 @@ function init() {
     }
   }
 
+  class Soju {
+    constructor() {
+      this.defaultY = (height / 4) * 3 - 65;
+      this.x = width;
+      this.y = (height / 4) * 3 - 65;
+      this.w = 25;
+      this.h = 65;
+      this.speed = 5;
+    }
+    draw() {
+      this.x -= this.speed;
+      ctx.drawImage(sojuImg, this.x, this.y);
+    }
+  }
+
+  function getItem() {
+    console.log("get soju");
+  }
+
   function start() {
     console.log("---------------------------start");
     setState();
     document.querySelector(".float-area").classList.remove("show");
     dansoMan = new DansoMan();
     dansoMan.draw();
+    soju = new Soju();
+    soju.draw();
     run();
   }
 
@@ -187,6 +213,7 @@ function init() {
     document.getElementById("score").innerHTML = timer;
     document.getElementById("btnToggle").innerHTML = "PAUSE!";
     dansoMan.draw();
+    soju.draw();
 
     if (timer % 120 === 0) {
       const speed = Math.floor(Math.random() * 6 + 2);
@@ -200,11 +227,12 @@ function init() {
       worker.draw();
       crash(dansoMan, worker);
     });
+    crash(dansoMan, soju, "item");
     showState(dansoMan.jump);
   }
 
-  function crash(man, worker) {
-    const margin = 10;
+  function crash(man, worker, type) {
+    const margin = type === "item" ? 0 : 10;
     const workerX = worker.x + margin;
     const workerY = worker.y + margin;
     const workerW = worker.w - margin * 2;
@@ -218,7 +246,7 @@ function init() {
     diffY = workerY - (manY + manH);
     const maxX = workerW + manW;
     if (diffX < 0 && diffX > -maxX && diffY < 0) {
-      finish();
+      type === "item" ? getItem() : finish();
     }
     document.getElementById("x-show").innerHTML = diffX;
     document.getElementById("y-show").innerHTML = diffY;
